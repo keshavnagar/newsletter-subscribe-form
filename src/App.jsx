@@ -1,5 +1,21 @@
+import { useState } from "react";
 import { CiMail } from "react-icons/ci";
 const App = () => {
+  const [subscribe, setSubscribe] = useState({
+    name: "",
+    email: "",
+  });
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    setSubscribe((prev) => ({ ...prev, [name]: value }));
+  };
+  const handleForm = (e) => {
+    e.preventDefault();
+    console.log(subscribe);
+    subscribe.email.trim()
+      ? alert(`${subscribe.name} subscribed this newsletter`)
+      : alert(`write the correct email`);
+  };
   return (
     <section className="bg-[#E94F37] w-screen h-screen flex justify-center items-center">
       <div className="bg-[#F6F7EB] w-[360px] p-[24px] rounded-[16px] shadow-xl flex flex-col justify-center items-center gap-5">
@@ -12,7 +28,7 @@ const App = () => {
             Stay updated with latest post
           </h2>
         </div>
-        <form className="flex flex-col w-full">
+        <form className="flex flex-col w-full" onSubmit={handleForm}>
           <label className="text-[#E94F37]" htmlFor="name">
             Name
           </label>
@@ -21,6 +37,9 @@ const App = () => {
             placeholder="enter your name"
             id="name"
             type="text"
+            name="name"
+            value={subscribe.name}
+            onChange={handleInput}
           />
           <label className="text-[#E94F37]" htmlFor="email">
             Email
@@ -30,6 +49,9 @@ const App = () => {
             placeholder="enter email address"
             id="email"
             type="email"
+            name="email"
+            value={subscribe.email}
+            onChange={handleInput}
           />
           <button className="text-[#F6F7EB] font-bold tracking-wide bg-[#e94f37]  rounded-md trasition duration-300 hover:bg-[#d8412a] px-3 py-2 mt-2 mb-2">
             Subscribe
